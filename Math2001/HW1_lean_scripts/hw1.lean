@@ -1,3 +1,4 @@
+-- CS 511 Formal Methods HW1 Problem 3 & 4
 import Mathlib.Data.Real.Basic
 axiom notnotE {p : Prop} (h : ¬ ¬ p) : p
 
@@ -7,7 +8,6 @@ intro h_p
 intro h_q
 have h_pq : p ∧ q  := by apply And.intro h_p h_q
 apply h h_pq
-
 
 -- 3b slide 23
 
