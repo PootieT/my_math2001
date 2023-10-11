@@ -141,7 +141,76 @@ example {p : ℕ} (hp : 2 ≤ p) (H : ∀ m : ℕ, 1 < m → m < p → ¬m ∣ p
     have h_contra := by apply H m hm_left h2 hmp
     contradiction
 
-
 -- 6b) Mop Sec 4.4.5
+example {a b c : ℕ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (h_pyth : a ^ 2 + b ^ 2 = c ^ 2) : 3 ≤ a := by
+  obtain ha_l | ha_g := lt_or_ge a 3 
+  . have ha_l': a ≤ 2 := by addarith[ha_l] 
+    obtain hb_l | hb_g := lt_or_ge b 2
+    . have hb_l': b≤1 := by addarith[hb_l]
+      have hc2 := by
+        calc
+          c^2 = a^2 + b^2 := by rw[h_pyth]
+          _ ≤ 2^2 + b^2 := by rel[ha_l'] 
+          _ ≤ 2^2 + 1^2 := by rel[hb_l'] 
+          _ < 3^2 := by numbers
+      cancel 2 at hc2
+      interval_cases c
+      . interval_cases a
+        . interval_cases b
+          . contradiction
+        . interval_cases b
+          . contradiction
+      . interval_cases a
+        . interval_cases b
+          . contradiction
+        . interval_cases b
+          . contradiction
+    . have hb2 := by 
+        calc
+          b^2 < a^2 + b^2 := by extra
+          _ = c^2 := by rw[h_pyth]
+      cancel 2 at hb2
+      have hb3: b+1 ≤c := by addarith[hb2]
+      have hc3 := by
+        calc
+          c^2 = a^2 + b^2 := by rw[h_pyth]
+          _ = a*a + b^2 := by ring
+          _ ≤ 2*2 + b^2 := by rel[ha_l']
+          _ = b^2 + 2*2 := by ring
+          _ ≤ b^2 + 2*b := by rel[hb_g]
+          _ < b^2 + 2*b + 1 := by extra
+          _ = (b+1)^2 := by ring
+      cancel 2 at hc3
+      have hbc := calc
+        b+1 ≤ c := by rel[hb3]
+        _ < b+1 := by rel[hc3]
+      have h_contra: 1<1 := by addarith[hbc]
+      contradiction
+  . apply ha_g 
+    
+
 -- 6c) Mop Sec 4.4.6 Exercise 1
+example {x y : ℝ} (n : ℕ) (hx : 0 ≤ x) (hn : 0 < n) (h : y ^ n ≤ x ^ n) :
+    y ≤ x := by
+  cancel n at h
+
 -- 6d) Mop Sec 4.4.6 Exercise 5
+example (p : ℕ) (h : Prime p) : p = 2 ∨ Odd p := by
+  obtain ⟨hp, H⟩ := h
+  obtain h_gt | h_eq := lt_or_eq_of_le hp
+  . right
+    have h_odd: ¬Nat.Even p:= by
+      intro h_even
+      obtain ⟨x, hx⟩ := h_even
+      have h_div_2: 2 ∣ p := by
+        use x
+        rw [hx]
+      obtain h2 := H 2 h_div_2
+      obtain hl| hr := h2
+      . contradiction
+      . rw [hr] at h_gt
+        have h_gt': 0<0 := by addarith[h_gt]
+        contradiction
+  . left
+    rw[h_eq]
