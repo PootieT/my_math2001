@@ -212,5 +212,8 @@ example (p : ℕ) (h : Prime p) : p = 2 ∨ Odd p := by
       . rw [hr] at h_gt
         have h_gt': 0<0 := by addarith[h_gt]
         contradiction
+    obtain h_even' | h_odd'  := Nat.even_or_odd p
+    . contradiction
+    . apply h_odd'
   . left
     rw[h_eq]
