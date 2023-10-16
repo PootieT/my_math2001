@@ -110,6 +110,8 @@ example : ∃ k : ℕ, Superpowered k ∧ ¬ Superpowered (k + 1) := by
     have h5_not_prime: ¬ Prime (2^2^5 + 1) := by
       apply not_prime 641 6700417
       . numbers
+      . numbers
+      . numbers
     contradiction  
 
 
