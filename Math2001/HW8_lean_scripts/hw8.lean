@@ -73,3 +73,17 @@ example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
       _ ≥ 2 * (2^k + 100) := by rel [IH]
       _ = 2^(k+1) + 100+100 := by ring
       _ ≥  2^(k+1) + 100 := by extra
+
+-- Problem 5
+def sum_odd : ℕ → ℕ
+  | 0 => 0
+  | (n+1) => (2*n+1) + sum_odd n
+theorem sum_odd_perfect_square (n: ℕ) : ∃j: ℕ, sum_odd n = j^2 := by
+  use n
+  simple_induction n with k IN
+  . -- base case
+    simp
+  . -- inductive step
+    simp[sum_odd]
+    rw [IN]
+    ring
