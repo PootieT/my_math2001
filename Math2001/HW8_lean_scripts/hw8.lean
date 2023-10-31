@@ -8,7 +8,7 @@ import Library.Tactic.Addarith
 import Library.Tactic.Use
 
 -- Problem 4a) MoP 6.1.3
-example {a b d : ℤ} (h : a ≡ b [ZMOD d]) (n : ℕ) : a ^ n ≡ b ^ n [ZMOD d] := by
+theorem problem4a {a b d : ℤ} (h : a ≡ b [ZMOD d]) (n : ℕ) : a ^ n ≡ b ^ n [ZMOD d] := by
   simple_induction n with k IN
   . -- base case
     use 0
@@ -25,7 +25,7 @@ example {a b d : ℤ} (h : a ≡ b [ZMOD d]) (n : ℕ) : a ^ n ≡ b ^ n [ZMOD d
 
 -- Problem 4b) MoP 6.1.6
 notation3 (prettyPrint := false) "forall_sufficiently_large "(...)", "r:(scoped P => ∃ C, ∀ x ≥ C, P x) => r
-example : forall_sufficiently_large n : ℕ, 2 ^ n ≥ n ^ 2 := by
+theorem problem4b : forall_sufficiently_large n : ℕ, 2 ^ n ≥ n ^ 2 := by
   dsimp
   use 4
   intro n hn
@@ -45,7 +45,7 @@ example : forall_sufficiently_large n : ℕ, 2 ^ n ≥ n ^ 2 := by
 
 
 -- Problem 4c) MoP 6.1.7 Ex 2
-example {a : ℝ} (ha : -1 ≤ a) (n : ℕ) : (1 + a) ^ n ≥ 1 + n * a := by
+theorem problem4c {a : ℝ} (ha : -1 ≤ a) (n : ℕ) : (1 + a) ^ n ≥ 1 + n * a := by
   simple_induction n with k IN
   . -- base case
     simp
@@ -59,7 +59,7 @@ example {a : ℝ} (ha : -1 ≤ a) (n : ℕ) : (1 + a) ^ n ≥ 1 + n * a := by
 
 
 -- Problem 4d) MoP 6.1.7 Ex 6
-example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
+theorem problem4d : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
   dsimp
   use 5
   intro n hn
@@ -78,7 +78,7 @@ example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
 def sum_odd : ℕ → ℕ
   | 0 => 0
   | (n+1) => (2*n+1) + sum_odd n
-theorem sum_odd_perfect_square (n: ℕ) : ∃j: ℕ, sum_odd n = j^2 := by
+theorem problem5 (n: ℕ) : ∃j: ℕ, sum_odd n = j^2 := by
   use n
   simple_induction n with k IN
   . -- base case
