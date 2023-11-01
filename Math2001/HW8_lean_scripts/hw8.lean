@@ -75,15 +75,15 @@ theorem problem4d : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 1
       _ ≥  2^(k+1) + 100 := by extra
 
 -- Problem 5
-def sum_odd : ℕ → ℕ
-  | 0 => 0
-  | (n+1) => (2*n+1) + sum_odd n
-theorem problem5 (n: ℕ) : ∃j: ℕ, sum_odd n = j^2 := by
-  use n
-  simple_induction n with k IN
+def foo : ℕ → ℕ
+  | 0     => 1
+  | n + 1 => foo (n) + 2 * n + 3
+theorem problem5b {n : ℕ} : ∃ (k : ℕ), foo (n) = k ^ 2 := by
+  use n+1
+  simple_induction n with h IN
   . -- base case
     simp
   . -- inductive step
-    simp[sum_odd]
+    simp[foo]
     rw [IN]
     ring
